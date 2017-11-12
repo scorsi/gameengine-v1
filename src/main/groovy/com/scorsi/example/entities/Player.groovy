@@ -2,12 +2,12 @@ package com.scorsi.example.entities
 
 import com.scorsi.example.Assets
 import com.scorsi.gameengine.Game
-import com.scorsi.gameengine.entities.PlayableCharacter
+import com.scorsi.gameengine.entities.MovableCharacter
 import com.scorsi.gameengine.utils.Position2D
 
 import java.awt.Graphics
 
-class Player extends PlayableCharacter {
+class Player extends MovableCharacter {
 
     Player(Game game, Position2D pos) {
         super(game, pos)
@@ -15,19 +15,26 @@ class Player extends PlayableCharacter {
 
     @Override
     void update() {
+        getInput()
+        move()
+    }
+
+    void getInput() {
+        resetMove()
+
         if (game.keyManager.up)
-            position.y -= 3
+            yMove = -speed
         if (game.keyManager.down)
-            position.y += 3
+            yMove = speed
         if (game.keyManager.left)
-            position.x -= 3
+            xMove = -speed
         if (game.keyManager.right)
-            position.x += 3
+            xMove = speed
     }
 
     @Override
     void render(Graphics g) {
-        g.drawImage(Assets.player, position.x as Integer, position.y as Integer, null)
+        g.drawImage(Assets.player, position.x as Integer, position.y as Integer, width, height, null)
     }
 
 }
