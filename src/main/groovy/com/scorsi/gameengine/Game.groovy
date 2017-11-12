@@ -1,6 +1,7 @@
 package com.scorsi.gameengine
 
 import com.scorsi.gameengine.display.Display
+import com.scorsi.gameengine.states.StateManager
 
 import java.awt.Dimension
 import java.awt.Graphics
@@ -75,20 +76,10 @@ abstract class Game implements Runnable {
     abstract protected void init() throws Exception
 
     /**
-     * Executed before update method
-     */
-    private void beforeUpdate() throws Exception {
-    }
-
-    /**
      * Executed at each tick to update variables
      */
-    abstract protected void update() throws Exception
-
-    /**
-     * Executed after update method
-     */
-    private void afterUpdate() throws Exception {
+    protected void update() throws Exception {
+        StateManager.getState().update()
     }
 
     /**
@@ -113,12 +104,17 @@ abstract class Game implements Runnable {
     /**
      * Executed at each frame to update display
      */
-    abstract protected void render() throws Exception
+    protected void render() throws Exception {
+        // Call render of the actual state
+        if (StateManager.getState() != null)
+            StateManager.getState().render(g)
+    }
 
     /**
      * Executed before render method
      */
     private void afterRender() throws Exception {
+        // Display on the screen
         bs.show()
         g.dispose()
     }
@@ -128,66 +124,58 @@ abstract class Game implements Runnable {
      */
     void run() {
 
+        // Initialize the engine
         try {
             beforeInit()
             init()
-        } catch (Exception e) {
+        } catch (ignored) {
             stop()
             return
         }
 
-        def lastTime = System.nanoTime()
-        def lastTimer = System.currentTimeMillis()
-        def nsPerTick = 1000000000D / FPS
-        def delta = 0D
+        Double timePerTick = 1000000000 / FPS
+        Double delta = 0
 
-        def ticks = 0
-        def frames = 0
+        Long now
+        Long lastTime = System.nanoTime()
 
+        // Used for the FPS counter
+        Long timer = 0
+        Integer ticks = 0
+
+        // The game loop
         while (running) {
-            def now = System.nanoTime()
-            delta += (now - lastTime) / nsPerTick
+            now = System.nanoTime()
+            delta += (now - lastTime) / timePerTick
+            timer += now - lastTime
             lastTime = now
 
-            def shouldRender = false
-            while (delta >= 1) {
-                delta -= 1
-
+            if (delta >= 1) {
                 // Update
                 try {
-                    ++ticks
-                    beforeUpdate()
                     update()
-                    afterUpdate()
                 } catch (Exception e) {
                     e.printStackTrace()
                 }
 
-                shouldRender = true
-            }
-
-            try {
-                Thread.sleep(2)
-            } catch (InterruptedException e) {
-                e.printStackTrace()
-            }
-
-            if (shouldRender) {
                 // Render
                 try {
-                    ++frames
                     beforeRender()
                     render()
                     afterRender()
                 } catch (Exception e) {
                     e.printStackTrace()
                 }
+
+                delta--
+                ticks++
             }
 
-            if (System.currentTimeMillis() - lastTimer >= 1000) {
-                lastTimer += 1000
-                frames = 0
+            // Display the FPS Counter
+            if (timer >= 1000000000) {
+                System.out.println("FPS Counter: " + ticks)
                 ticks = 0
+                timer = 0
             }
         }
 
