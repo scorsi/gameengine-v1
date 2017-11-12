@@ -4,7 +4,7 @@ version '1.0-SNAPSHOT'
 apply plugin: 'application'
 apply plugin: 'groovy'
 
-mainClassName = "com.scorsi.gameengine.Launcher"
+mainClassName = "com.scorsi.example.MyGame"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
