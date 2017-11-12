@@ -21,3 +21,17 @@ dependencies {
             name: 'junit',
             version: '4.12'
 }
+
+jar {
+    baseName = "gameengine"
+    manifest {
+        attributes (
+                "Class-Path" : configurations.compile.collect { it.getName() }.join(' '),
+                "Main-Class" : mainClassName
+        )
+    }
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    //destinationDir = file("$rootDir/out")
+}
+
+task ("package", dependsOn: jar, type: Jar) {}
