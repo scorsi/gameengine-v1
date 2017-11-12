@@ -31,7 +31,7 @@ class GameState extends State {
         grassTile = new GrassTile(0)
         dirtTile = new DirtTile(1)
         stoneTile = new StoneTile(2)
-        world = new World("/worlds/world1.txt")
+        world = new World("/worlds/world2.txt")
     }
 
     @Override
