@@ -1,4 +1,4 @@
-package com.scorsi.gameengine.display.gfx
+package com.scorsi.gameengine.graphics
 
 import java.awt.image.BufferedImage
 

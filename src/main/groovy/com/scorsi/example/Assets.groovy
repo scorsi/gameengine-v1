@@ -1,7 +1,7 @@
 package com.scorsi.example
 
-import com.scorsi.gameengine.display.gfx.ImageLoader
-import com.scorsi.gameengine.display.gfx.SpriteSheet
+import com.scorsi.gameengine.graphics.ImageLoader
+import com.scorsi.gameengine.graphics.SpriteSheet
 
 import java.awt.image.BufferedImage
 
