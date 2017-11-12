@@ -13,17 +13,12 @@ class Tile {
     protected BufferedImage texture
     protected Integer id
 
-    protected Integer width
-    protected Integer height
-
     Boolean isSolid
 
     Tile(BufferedImage texture, Integer id, Boolean isSolid = false) {
         this.texture = texture
         this.id = id
-
-        this.width = TILE_WIDTH
-        this.height = TILE_HEIGHT
+        this.isSolid = isSolid
 
         tiles[id] = this
     }
@@ -33,7 +28,7 @@ class Tile {
     }
 
     void render(Graphics g, Integer x, Integer y) {
-        g.drawImage(texture, x, y, width, height, null)
+        g.drawImage(texture, x, y, TILE_WIDTH, TILE_HEIGHT, null)
     }
 
 }
