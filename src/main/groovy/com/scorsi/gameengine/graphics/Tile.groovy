@@ -1,5 +1,7 @@
 package com.scorsi.gameengine.graphics
 
+import com.scorsi.gameengine.utils.Position2D
+
 import java.awt.Graphics
 import java.awt.image.BufferedImage
 
@@ -27,8 +29,8 @@ class Tile {
 
     }
 
-    void render(Graphics g, Integer x, Integer y) {
-        g.drawImage(texture, x, y, TILE_WIDTH, TILE_HEIGHT, null)
+    void render(Graphics g, Position2D position) {
+        g.drawImage(texture, position.x as Integer, position.y as Integer, TILE_WIDTH, TILE_HEIGHT, null)
     }
 
 }
