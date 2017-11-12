@@ -16,16 +16,19 @@ abstract class Game implements Runnable {
     static final WIDTH = 1024
     static final HEIGHT = WIDTH / 12 * 9
     static final NAME = "Game"
+    static final FPS = 60D
 
     /**
      * The Display of the game
      */
     private Display display
-    private String title
-    private Dimension dimension
+    protected String title
+    protected Dimension dimension
+    protected Integer height
+    protected Integer width
 
-    private BufferStrategy bs
-    private Graphics g
+    protected BufferStrategy bs
+    protected Graphics g
 
     /**
      * Threads
@@ -38,18 +41,22 @@ abstract class Game implements Runnable {
      */
     Game() {
         title = NAME
-        dimension = new Dimension(WIDTH as Integer, HEIGHT as Integer)
+        width = WIDTH as Integer
+        height = HEIGHT as Integer
+        dimension = new Dimension(width, height)
     }
 
     /**
      * Constructor with custom parameters
      *
      * @param name
-     * @param width
-     * @param height
+     * @param cWidth
+     * @param cHeight
      */
-    Game(String name, Integer width, Integer height) {
+    Game(String name, Integer cWidth, Integer cHeight) {
         title = name
+        width = cWidth
+        height = cHeight
         dimension = new Dimension(width, height)
     }
 
@@ -60,6 +67,11 @@ abstract class Game implements Runnable {
         display = new Display(title, dimension.width as Integer, dimension.height as Integer)
     }
 
+    /**
+     * Initialize customs resources
+     *
+     * @throws Exception
+     */
     abstract protected void init() throws Exception
 
     /**
@@ -124,23 +136,58 @@ abstract class Game implements Runnable {
             return
         }
 
+        def lastTime = System.nanoTime()
+        def lastTimer = System.currentTimeMillis()
+        def nsPerTick = 1000000000D / FPS
+        def delta = 0D
+
+        def ticks = 0
+        def frames = 0
+
         while (running) {
-            // Update
+            def now = System.nanoTime()
+            delta += (now - lastTime) / nsPerTick
+            lastTime = now
+
+            def shouldRender = false
+            while (delta >= 1) {
+                delta -= 1
+
+                // Update
+                try {
+                    ++ticks
+                    beforeUpdate()
+                    update()
+                    afterUpdate()
+                } catch (Exception e) {
+                    e.printStackTrace()
+                }
+
+                shouldRender = true
+            }
+
             try {
-                beforeUpdate()
-                update()
-                afterUpdate()
-            } catch (Exception e) {
+                Thread.sleep(2)
+            } catch (InterruptedException e) {
                 e.printStackTrace()
             }
 
-            // Render
-            try {
-                beforeRender()
-                render()
-                afterRender()
-            } catch (Exception e) {
-                e.printStackTrace()
+            if (shouldRender) {
+                // Render
+                try {
+                    ++frames
+                    beforeRender()
+                    render()
+                    afterRender()
+                } catch (Exception e) {
+                    e.printStackTrace()
+                }
+            }
+
+            if (System.currentTimeMillis() - lastTimer >= 1000) {
+                lastTimer += 1000
+                frames = 0
+                ticks = 0
             }
         }
 
