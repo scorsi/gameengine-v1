@@ -1,6 +1,7 @@
 package com.scorsi.gameengine
 
 import com.scorsi.gameengine.display.Display
+import com.scorsi.gameengine.input.KeyManager
 import com.scorsi.gameengine.states.StateManager
 
 import java.awt.Dimension
@@ -30,6 +31,11 @@ abstract class Game implements Runnable {
 
     protected BufferStrategy bs
     protected Graphics g
+
+    /**
+     * Inputs
+     */
+    private KeyManager keyManager
 
     /**
      * Threads
@@ -66,6 +72,8 @@ abstract class Game implements Runnable {
      */
     private void beforeInit() {
         display = new Display(title, dimension.width as Integer, dimension.height as Integer)
+        keyManager = new KeyManager()
+        display.frame.addKeyListener(keyManager)
     }
 
     /**
@@ -76,10 +84,20 @@ abstract class Game implements Runnable {
     abstract protected void init() throws Exception
 
     /**
+     * Executed before update method
+     */
+    private void beforeUpdate() throws Exception {
+        keyManager.update()
+
+        // Call update of the actual state
+        if (StateManager.getState() != null)
+            StateManager.getState().update()
+    }
+
+    /**
      * Executed at each tick to update variables
      */
     protected void update() throws Exception {
-        StateManager.getState().update()
     }
 
     /**
@@ -99,15 +117,16 @@ abstract class Game implements Runnable {
 
         // Clear screen
         g.clearRect(0, 0, dimension.width as Integer, dimension.height as Integer)
+
+        // Call render of the actual state
+        if (StateManager.getState() != null)
+            StateManager.getState().render(g)
     }
 
     /**
      * Executed at each frame to update display
      */
     protected void render() throws Exception {
-        // Call render of the actual state
-        if (StateManager.getState() != null)
-            StateManager.getState().render(g)
     }
 
     /**
@@ -128,8 +147,9 @@ abstract class Game implements Runnable {
         try {
             beforeInit()
             init()
-        } catch (ignored) {
-            stop()
+        } catch (Exception e) {
+            e.printStackTrace()
+            running = false
             return
         }
 
@@ -153,6 +173,7 @@ abstract class Game implements Runnable {
             if (delta >= 1) {
                 // Update
                 try {
+                    beforeUpdate()
                     update()
                 } catch (Exception e) {
                     e.printStackTrace()
@@ -233,5 +254,14 @@ abstract class Game implements Runnable {
      */
     Display getDisplay() {
         return display
+    }
+
+    /**
+     * Getter for keyManager
+     *
+     * @return
+     */
+    KeyManager getKeyManager() {
+        return keyManager
     }
 }
