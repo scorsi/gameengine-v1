@@ -1,31 +1,33 @@
 package com.scorsi.example.states
 
-import com.scorsi.gameengine.display.gfx.SpriteSheet
+import com.scorsi.example.entities.Player
+import com.scorsi.gameengine.Game
 import com.scorsi.gameengine.states.State
+import com.scorsi.gameengine.utils.Position2D
 
 import java.awt.Graphics
 
 class GameState extends State {
 
-    private SpriteSheet testSheet
+    Player player
 
-    GameState() {
-
+    GameState(Game game) {
+        super(game)
     }
 
     @Override
     void init() {
-        testSheet = new SpriteSheet("/textures/sheet.png")
+        player = new Player(game, new Position2D(100, 100))
     }
 
     @Override
     void update() {
-
+        player.update()
     }
 
     @Override
     void render(Graphics g) {
-        g.drawImage(testSheet.crop(0,0,32,32), 10, 10, 64, 64, null)
+        player.render(g)
     }
 
 }
