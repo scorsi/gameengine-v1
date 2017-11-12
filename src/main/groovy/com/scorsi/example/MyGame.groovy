@@ -6,20 +6,26 @@ import com.scorsi.gameengine.states.StateManager
 
 class MyGame extends Game {
 
+    private GameState gameState
+
+    MyGame() {
+        super()
+    }
+
     @Override
     protected void init() throws Exception {
-        StateManager.setState(new GameState())
-        StateManager.getState().init()
+        Assets.init()
+        gameState = new GameState(this)
+        StateManager.setState(gameState)
+        gameState.init()
     }
 
     @Override
     protected void update() throws Exception {
-        super.update()
     }
 
     @Override
     protected void render() throws Exception {
-        super.render()
     }
 
     /**
