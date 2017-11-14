@@ -10,45 +10,46 @@ import java.awt.Graphics
 class World {
 
     protected Game game
-    Position2D screenPosition
-    Integer height
-    Integer width
+
+    protected Integer width
+    protected Integer height
+
     Integer spawnX
     Integer spawnY
 
-    Integer[][] tiles
+    protected Integer[][] tiles
 
     World(Game game, String path) {
         this.game = game
-        this.screenPosition = new Position2D(0, 0)
-        loadWorld(path)
-    }
-
-    World(Game game, String path, Position2D screenPosition) {
-        this.game = game
-        this.screenPosition = screenPosition
         loadWorld(path)
     }
 
     void update() {
-        screenPosition = game.camera.offset
     }
 
     void render(Graphics g) {
-        for (Integer y in 0 .. height - 1) {
-            for (Integer x in 0 .. width - 1) {
-                def realPos = new Position2D(
-                        x * Tile.TILE_WIDTH - screenPosition.x,
-                        y * Tile.TILE_HEIGHT - screenPosition.y)
+        Integer xStart = Math.max(0, game.camera.offset.x / Tile.TILE_WIDTH) as Integer
+        Integer xEnd = Math.min(width, (game.camera.offset.x + game.display.width) / Tile.TILE_WIDTH + 1) as Integer
 
-                getTile(new Position2D(x, y)).render(g, realPos)
+        Integer yStart = Math.max(0, game.camera.offset.y / Tile.TILE_HEIGHT) as Integer
+        Integer yEnd = Math.min(height, (game.camera.offset.y + game.display.height) / Tile.TILE_HEIGHT + 1) as Integer
+
+        for (Integer y in yStart .. yEnd - 1) {
+            for (Integer x in xStart .. xEnd - 1) {
+                def realPos = new Position2D(
+                        x * Tile.TILE_WIDTH - game.camera.offset.x,
+                        y * Tile.TILE_HEIGHT - game.camera.offset.y)
+
+                Tile tile = getTile(x, y)
+                if (tile == null) continue
+                tile.render(g, realPos)
             }
         }
     }
 
-    Tile getTile(Position2D pos) {
-        if (pos.x > width || pos.x < 0 || pos.y > height || pos.y < 0) return null
-        return Tile.tiles[tiles[pos.x as Integer][pos.y as Integer]]
+    private Tile getTile(Integer x, Integer y) {
+        if (x > width || x < 0 || y > height || y < 0) return null
+        return Tile.tiles[tiles[x][y]]
     }
 
     private void loadWorld(String path) {
@@ -67,4 +68,11 @@ class World {
         }
     }
 
+    Integer getHeight() {
+        return height
+    }
+
+    Integer getWidth() {
+        return width
+    }
 }
