@@ -105,7 +105,8 @@ abstract class Game implements Runnable {
         // Get or create the BufferStrategy
         bs = display.getCanvas().getBufferStrategy()
         if (bs == null) {
-            bs = display.getCanvas().createBufferStrategy(3)
+            display.getCanvas().createBufferStrategy(3)
+            bs = display.getCanvas().getBufferStrategy()
             if (bs == null)
                 throw new Exception("Unable to create the buffer strategy")
         }
