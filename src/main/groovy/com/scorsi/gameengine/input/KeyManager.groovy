@@ -5,7 +5,7 @@ import java.awt.event.KeyListener
 
 class KeyManager implements KeyListener {
 
-    Boolean[] keys
+    ArrayList<Boolean> keys
 
     /**
      * Should be removed in the future
@@ -13,7 +13,7 @@ class KeyManager implements KeyListener {
     Boolean up, down, left, right
 
     KeyManager() {
-        keys = new Boolean[256]
+        keys = new ArrayList<>()
     }
 
     void update() {
