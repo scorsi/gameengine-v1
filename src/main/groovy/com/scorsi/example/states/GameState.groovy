@@ -23,6 +23,8 @@ class GameState extends State {
 
     GameState(Game game) {
         super(game)
+
+        game.camera.move(new Position2D(100, 100))
     }
 
     @Override
@@ -31,7 +33,7 @@ class GameState extends State {
         grassTile = new GrassTile(0)
         dirtTile = new DirtTile(1)
         stoneTile = new StoneTile(2)
-        world = new World("/worlds/world2.txt")
+        world = new World(game, "/worlds/world2.txt")
     }
 
     @Override

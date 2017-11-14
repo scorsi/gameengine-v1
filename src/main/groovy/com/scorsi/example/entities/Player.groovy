@@ -17,6 +17,8 @@ class Player extends MovableCharacter {
     void update() {
         getInput()
         move()
+
+        game.camera.centerOnEntity(this)
     }
 
     void getInput() {
@@ -34,7 +36,10 @@ class Player extends MovableCharacter {
 
     @Override
     void render(Graphics g) {
-        g.drawImage(Assets.player, position.x as Integer, position.y as Integer, width, height, null)
+        g.drawImage(Assets.player,
+                (position.x - game.camera.offset.x) as Integer,
+                (position.y - game.camera.offset.y) as Integer,
+                width, height, null)
     }
 
 }
