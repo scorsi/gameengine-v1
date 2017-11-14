@@ -9,9 +9,9 @@ class Display {
     /**
      * Configuration
      */
-    String name
-    Integer width
-    Integer height
+    private String name
+    private Integer width
+    private Integer height
 
     /**
      * The window
@@ -22,14 +22,14 @@ class Display {
     /**
      * Constructor.
      *
-     * @param cName the name of the window
-     * @param cWidth the width of the window
-     * @param cHeight the height of the window
+     * @param name the name of the window
+     * @param width the width of the window
+     * @param height the height of the window
      */
-    Display(String cName, Integer cWidth, Integer cHeight) {
-        name = cName
-        width = cWidth
-        height = cHeight
+    Display(String name, Integer width, Integer height) {
+        this.name = name
+        this.width = width
+        this.height = height
 
         createDisplay()
         createCanvas()
@@ -81,5 +81,17 @@ class Display {
      */
     JFrame getFrame() {
         return frame
+    }
+
+    String getName() {
+        return name
+    }
+
+    Integer getWidth() {
+        return width
+    }
+
+    Integer getHeight() {
+        return height
     }
 }
