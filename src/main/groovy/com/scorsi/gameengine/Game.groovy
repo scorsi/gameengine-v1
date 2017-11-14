@@ -1,5 +1,6 @@
 package com.scorsi.gameengine
 
+import com.scorsi.gameengine.display.Camera
 import com.scorsi.gameengine.display.Display
 import com.scorsi.gameengine.input.KeyManager
 import com.scorsi.gameengine.states.StateManager
@@ -38,6 +39,11 @@ abstract class Game implements Runnable {
     private KeyManager keyManager
 
     /**
+     * Camera
+     */
+    private Camera camera
+
+    /**
      * Threads
      */
     private Thread thread
@@ -74,6 +80,7 @@ abstract class Game implements Runnable {
         display = new Display(title, dimension.width as Integer, dimension.height as Integer)
         keyManager = new KeyManager()
         display.frame.addKeyListener(keyManager)
+        camera = new Camera(this)
     }
 
     /**
@@ -263,5 +270,14 @@ abstract class Game implements Runnable {
      */
     KeyManager getKeyManager() {
         return keyManager
+    }
+
+    /**
+     * Getter for camera
+     *
+     * @return
+     */
+    Camera getCamera() {
+        return camera
     }
 }

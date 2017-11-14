@@ -1,5 +1,6 @@
 package com.scorsi.gameengine.graphics
 
+import com.scorsi.gameengine.Game
 import com.scorsi.gameengine.utils.FileLoader
 import com.scorsi.gameengine.utils.Parser
 import com.scorsi.gameengine.utils.Position2D
@@ -8,6 +9,7 @@ import java.awt.Graphics
 
 class World {
 
+    protected Game game
     Position2D screenPosition
     Integer height
     Integer width
@@ -16,25 +18,28 @@ class World {
 
     Integer[][] tiles
 
-    World(String path) {
+    World(Game game, String path) {
+        this.game = game
         this.screenPosition = new Position2D(0, 0)
         loadWorld(path)
     }
 
-    World(String path, Position2D screenPosition) {
+    World(Game game, String path, Position2D screenPosition) {
+        this.game = game
         this.screenPosition = screenPosition
         loadWorld(path)
     }
 
     void update() {
-
+        screenPosition = game.camera.offset
     }
 
     void render(Graphics g) {
         for (Integer y in 0 .. height - 1) {
             for (Integer x in 0 .. width - 1) {
-                def realPos = new Position2D(x * Tile.TILE_WIDTH + screenPosition.x,
-                        y * Tile.TILE_HEIGHT + screenPosition.y)
+                def realPos = new Position2D(
+                        x * Tile.TILE_WIDTH - screenPosition.x,
+                        y * Tile.TILE_HEIGHT - screenPosition.y)
 
                 getTile(new Position2D(x, y)).render(g, realPos)
             }
