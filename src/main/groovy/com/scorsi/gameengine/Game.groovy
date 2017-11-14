@@ -5,7 +5,6 @@ import com.scorsi.gameengine.display.Display
 import com.scorsi.gameengine.input.KeyManager
 import com.scorsi.gameengine.states.StateManager
 
-import java.awt.Dimension
 import java.awt.Graphics
 import java.awt.image.BufferStrategy
 
@@ -26,9 +25,6 @@ abstract class Game implements Runnable {
      */
     private Display display
     protected String title
-    protected Dimension dimension
-    protected Integer height
-    protected Integer width
 
     protected BufferStrategy bs
     protected Graphics g
@@ -54,30 +50,25 @@ abstract class Game implements Runnable {
      */
     Game() {
         title = NAME
-        width = WIDTH as Integer
-        height = HEIGHT as Integer
-        dimension = new Dimension(width, height)
+        display = new Display(title, WIDTH as Integer, HEIGHT as Integer)
     }
 
     /**
      * Constructor with custom parameters
      *
      * @param name
-     * @param cWidth
-     * @param cHeight
+     * @param width
+     * @param height
      */
-    Game(String name, Integer cWidth, Integer cHeight) {
+    Game(String name, Integer width, Integer height) {
         title = name
-        width = cWidth
-        height = cHeight
-        dimension = new Dimension(width, height)
+        display = new Display(title, width, height)
     }
 
     /**
      * Initialize the Game
      */
     private void beforeInit() {
-        display = new Display(title, dimension.width as Integer, dimension.height as Integer)
         keyManager = new KeyManager()
         display.frame.addKeyListener(keyManager)
         camera = new Camera(this)
@@ -123,7 +114,7 @@ abstract class Game implements Runnable {
         g = bs.getDrawGraphics()
 
         // Clear screen
-        g.clearRect(0, 0, dimension.width as Integer, dimension.height as Integer)
+        g.clearRect(0, 0, display.width, display.height)
 
         // Call render of the actual state
         if (StateManager.getState() != null)
@@ -234,24 +225,6 @@ abstract class Game implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace()
         }
-    }
-
-    /**
-     * Getter for dimension
-     *
-     * @return
-     */
-    Dimension getDimension() {
-        return dimension
-    }
-
-    /**
-     * Getter for title
-     *
-     * @return
-     */
-    String getTitle() {
-        return title
     }
 
     /**
