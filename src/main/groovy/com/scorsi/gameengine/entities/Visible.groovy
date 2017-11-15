@@ -10,10 +10,10 @@ trait Visible implements Positionable, Sizable {
 
     BufferedImage image
 
-    Boolean centerToCamera = false
+    Boolean clipToCamera = true
 
     void render(Graphics g) {
-        if (centerToCamera)
+        if (clipToCamera)
             g.drawImage(image,
                     (position.x - handler.camera.offset.x) as Integer,
                     (position.y - handler.camera.offset.y) as Integer,
