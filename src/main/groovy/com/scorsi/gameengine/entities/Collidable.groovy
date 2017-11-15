@@ -11,7 +11,7 @@ abstract trait Collidable implements Positionable, Sizable {
     /**
      * The box collision
      */
-    Rectangle2D collisionBox = new Rectangle2D(0, 0, width, height)
+    Rectangle2D collisionBox = new Rectangle2D(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT)
 
     /**
      * Enable solid tiles check
