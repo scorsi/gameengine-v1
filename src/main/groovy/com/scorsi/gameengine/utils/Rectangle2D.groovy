@@ -26,6 +26,41 @@ class Rectangle2D {
         return new Rectangle2D(new Position2D(this.origin.x + offset.x, this.origin.y + offset.y), size)
     }
 
+    /**
+     * Check if the given position is contained by this Rectangle2D
+     *
+     * @param position
+     * @return
+     */
+    Boolean contains(Position2D position) {
+        int w = size.x
+        int h = size.y
+
+        if ((w | h) < 0) {
+            // At least one of the dimensions is negative...
+            return false
+        }
+
+        // Note: if either dimension is zero, tests below must return false...
+        int x = origin.x
+        int y = origin.y
+        if (position.x < x || position.y < y) {
+            return false
+        }
+
+        w += x
+        h += y
+        //    overflow || intersect
+        return ((w < x || w > X) &&
+                (h < y || h > Y));
+    }
+
+    /**
+     * Check if this Rectangle2D intersects with another Rectangle2D
+     *
+     * @param other
+     * @return
+     */
     Boolean intersect(Rectangle2D other) {
         Double tw = this.size.x
         Double th = this.size.y
