@@ -14,11 +14,8 @@ class GameState extends State {
 
     World world
 
-    private EntityManager entityManager
-
     GameState(Handler handler) {
         super(handler)
-        entityManager = new EntityManager(handler)
     }
 
     @Override

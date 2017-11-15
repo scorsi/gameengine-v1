@@ -2,8 +2,11 @@ package com.scorsi.gameengine
 
 import com.scorsi.gameengine.display.Camera
 import com.scorsi.gameengine.display.Display
+import com.scorsi.gameengine.entities.Entity
+import com.scorsi.gameengine.entities.EntityManager
 import com.scorsi.gameengine.graphics.World
 import com.scorsi.gameengine.input.KeyManager
+import com.scorsi.gameengine.states.StateManager
 
 class Handler {
 
@@ -28,5 +31,9 @@ class Handler {
 
     Display getDisplay() {
         return game.display
+    }
+
+    EntityManager getEntityManager() {
+        return StateManager.currentState.entityManager
     }
 }
