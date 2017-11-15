@@ -1,6 +1,9 @@
 package com.scorsi.gameengine
 
+import com.scorsi.gameengine.display.Camera
+import com.scorsi.gameengine.display.Display
 import com.scorsi.gameengine.graphics.World
+import com.scorsi.gameengine.input.KeyManager
 
 class Handler {
 
@@ -13,5 +16,17 @@ class Handler {
 
     Game getGame() {
         return game
+    }
+
+    Camera getCamera() {
+        return game.camera
+    }
+
+    KeyManager getKeyManager() {
+        return game.keyManager
+    }
+
+    Display getDisplay() {
+        return game.display
     }
 }

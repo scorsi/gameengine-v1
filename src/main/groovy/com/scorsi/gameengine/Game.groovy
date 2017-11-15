@@ -67,7 +67,7 @@ abstract class Game implements Runnable {
      */
     Game(String name, Integer width, Integer height) {
         title = name
-        display = new Display(title, width, height)
+        display = new Display(name, width, height)
     }
 
     /**

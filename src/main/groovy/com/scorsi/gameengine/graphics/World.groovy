@@ -29,17 +29,17 @@ class World {
     }
 
     void render(Graphics g) {
-        Integer xStart = Math.max(0, handler.game.camera.offset.x / Tile.TILE_WIDTH) as Integer
-        Integer xEnd = Math.min(width, (handler.game.camera.offset.x + handler.game.display.width) / Tile.TILE_WIDTH + 1) as Integer
+        Integer xStart = Math.max(0, handler.camera.offset.x / Tile.TILE_WIDTH) as Integer
+        Integer xEnd = Math.min(width, (handler.camera.offset.x + handler.display.width) / Tile.TILE_WIDTH + 1) as Integer
 
-        Integer yStart = Math.max(0, handler.game.camera.offset.y / Tile.TILE_HEIGHT) as Integer
-        Integer yEnd = Math.min(height, (handler.game.camera.offset.y + handler.game.display.height) / Tile.TILE_HEIGHT + 1) as Integer
+        Integer yStart = Math.max(0, handler.camera.offset.y / Tile.TILE_HEIGHT) as Integer
+        Integer yEnd = Math.min(height, (handler.camera.offset.y + handler.display.height) / Tile.TILE_HEIGHT + 1) as Integer
 
         for (Integer y in yStart .. yEnd - 1) {
             for (Integer x in xStart .. xEnd - 1) {
                 def realPos = new Position2D(
-                        x * Tile.TILE_WIDTH - handler.game.camera.offset.x,
-                        y * Tile.TILE_HEIGHT - handler.game.camera.offset.y)
+                        x * Tile.TILE_WIDTH - handler.camera.offset.x,
+                        y * Tile.TILE_HEIGHT - handler.camera.offset.y)
 
                 Tile tile = getTile(x, y)
                 if (tile == null) continue

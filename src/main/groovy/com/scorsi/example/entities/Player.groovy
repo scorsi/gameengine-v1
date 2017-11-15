@@ -24,22 +24,21 @@ class Player extends Entity implements Collidable, Movable, Visible, Updatable {
 
     @Override
     void update() {
+        resetMove()
         getInput()
         move()
 
-        handler.game.camera.centerOnEntity(this)
+        handler.camera.centerOnEntity(this)
     }
 
     void getInput() {
-        resetMove()
-
-        if (handler.game.keyManager.up)
+        if (handler.keyManager.up)
             yMove = -speed
-        if (handler.game.keyManager.down)
+        if (handler.keyManager.down)
             yMove = speed
-        if (handler.game.keyManager.left)
+        if (handler.keyManager.left)
             xMove = -speed
-        if (handler.game.keyManager.right)
+        if (handler.keyManager.right)
             xMove = speed
     }
 

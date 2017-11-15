@@ -21,8 +21,8 @@ trait Visible implements Positionable {
     void render(Graphics g) {
         if (centerToCamera)
             g.drawImage(image,
-                    (position.x - handler.game.camera.offset.x) as Integer,
-                    (position.y - handler.game.camera.offset.y) as Integer,
+                    (position.x - handler.camera.offset.x) as Integer,
+                    (position.y - handler.camera.offset.y) as Integer,
                     width, height, null)
         else
             g.drawImage(image, position.x as Integer, position.y as Integer, width, height, null)
