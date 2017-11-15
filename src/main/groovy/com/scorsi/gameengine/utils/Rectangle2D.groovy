@@ -51,8 +51,8 @@ class Rectangle2D {
         w += x
         h += y
         //    overflow || intersect
-        return ((w < x || w > X) &&
-                (h < y || h > Y));
+        return ((w < x || w > position.x) &&
+                (h < y || h > position.y))
     }
 
     /**
