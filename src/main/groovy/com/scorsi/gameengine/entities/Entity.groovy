@@ -12,6 +12,11 @@ abstract class Entity {
         this.isEnabled = true
     }
 
+    void delete() {
+        isEnabled = false
+        handler.entityManager.deleteEntity(this)
+    }
+
     void enable() {
         isEnabled = true
     }
