@@ -4,6 +4,7 @@ import com.scorsi.example.Assets
 import com.scorsi.gameengine.Handler
 import com.scorsi.gameengine.entities.Collidable
 import com.scorsi.gameengine.entities.Entity
+import com.scorsi.gameengine.entities.LookAt
 import com.scorsi.gameengine.entities.Movable
 import com.scorsi.gameengine.entities.Updatable
 import com.scorsi.gameengine.entities.Visible
@@ -13,13 +14,12 @@ import com.scorsi.gameengine.utils.Rectangle2D
 
 class Player extends Entity implements Collidable, Movable, Visible, Updatable {
 
+    private LookAt lookAt
+
     /**
      * All current animations
      */
-    Animation downAnimation
-    Animation upAnimation
-    Animation leftAnimation
-    Animation rightAnimation
+    HashMap<LookAt, Animation> animations
 
     Player(Handler handler, Position2D position) {
         super(handler)
@@ -31,21 +31,21 @@ class Player extends Entity implements Collidable, Movable, Visible, Updatable {
         this.enableEntityCollision = true
 
         // Initialize Animations
-        downAnimation = new Animation(500, Assets.player_down)
-        upAnimation = new Animation(500, Assets.player_up)
-        leftAnimation = new Animation(500, Assets.player_left)
-        rightAnimation = new Animation(500, Assets.player_right)
-
-        image = downAnimation.currentFrame
+        animations = new HashMap<>()
+        animations[LookAt.Down] = new Animation(500, Assets.player_down)
+        animations[LookAt.Up] = new Animation(500, Assets.player_up)
+        animations[LookAt.Left] = new Animation(500, Assets.player_left)
+        animations[LookAt.Right] = new Animation(500, Assets.player_right)
+        lookAt = LookAt.Down
     }
 
     @Override
     void update() {
-        downAnimation.update()
-        upAnimation.update()
-        leftAnimation.update()
-        rightAnimation.update()
-        setCurrentAnimationFrame()
+        for (def animation : animations)
+            animation.value.update()
+
+        determineLookAt()
+        image = animations[lookAt].currentFrame
 
         resetMove()
         getInput()
@@ -54,16 +54,16 @@ class Player extends Entity implements Collidable, Movable, Visible, Updatable {
         handler.camera.centerOnEntity(this)
     }
 
-    private setCurrentAnimationFrame()
+    private determineLookAt()
     {
         if (xMove < 0)
-            image = leftAnimation.currentFrame
+            lookAt = LookAt.Left
         else if (xMove > 0)
-            image = rightAnimation.currentFrame
+            lookAt = LookAt.Right
         else if (yMove < 0)
-            image = upAnimation.currentFrame
+            lookAt = LookAt.Up
         else if (yMove > 0)
-            image = downAnimation.currentFrame
+            lookAt = LookAt.Down
     }
 
     void getInput() {
