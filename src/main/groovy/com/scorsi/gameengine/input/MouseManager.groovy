@@ -9,12 +9,14 @@ import java.awt.event.MouseMotionListener
 
 class MouseManager implements MouseListener, MouseMotionListener {
 
-    private Dictionary<Integer, Boolean> buttons
-    private Position2D mousePosition = new Position2D()
+    private HashMap<Integer, Boolean> buttons
+    private Position2D mousePosition
     private Handler handler
 
     MouseManager(Handler handler) {
         this.handler = handler
+        this.buttons = new HashMap<>()
+        this.mousePosition = new Position2D()
     }
 
     @Override
