@@ -7,6 +7,7 @@ import com.scorsi.gameengine.entities.Entity
 import com.scorsi.gameengine.entities.Visible
 import com.scorsi.gameengine.graphics.Tile
 import com.scorsi.gameengine.utils.Position2D
+import com.scorsi.gameengine.utils.Rectangle2D
 
 class Tree extends Entity implements Visible, Collidable {
 
@@ -15,10 +16,14 @@ class Tree extends Entity implements Visible, Collidable {
 
         this.position = position
 
-        image = Assets.tree
+        this.enableEntityCollision = true
 
-        width = Tile.TILE_WIDTH
-        height = Tile.TILE_HEIGHT * 2
+        this.image = Assets.tree
+
+        this.width = Tile.TILE_WIDTH
+        this.height = Tile.TILE_HEIGHT * 2
+
+        this.collisionBox = new Rectangle2D(10, height / 1.5D, width - 20, height - height / 1.5D)
     }
 
 }

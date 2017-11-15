@@ -1,6 +1,7 @@
 package com.scorsi.gameengine.entities
 
 import com.scorsi.gameengine.graphics.Tile
+import com.scorsi.gameengine.utils.Position2D
 import com.scorsi.gameengine.utils.Rectangle2D
 import groovy.transform.SelfType
 
@@ -18,6 +19,11 @@ abstract trait Collidable implements Positionable, Sizable {
     Boolean enableSolidTilesCollision = false
 
     /**
+     * Enable entity collision
+     */
+    Boolean enableEntityCollision = false
+
+    /**
      * Check if we can move to the given distance along X-axis
      *
      * @param xMove
@@ -25,12 +31,23 @@ abstract trait Collidable implements Positionable, Sizable {
      * @return
      */
     void collisionMoveX(Double xMove, Boolean snapToTile = false) {
-        if (!enableSolidTilesCollision)
-        {
-            position.x += xMove
+        if (enableEntityCollision && checkEntityCollision(xMove, 0))
             return
-        }
 
+        if (!enableSolidTilesCollision)
+            position.x += xMove
+        else
+            computeTilesCollisionMoveX(xMove, snapToTile)
+    }
+
+    /**
+     * Check and compute the collision with tiles along the X-axis
+     *
+     * @param xMove
+     * @param snapToTile
+     */
+    void computeTilesCollisionMoveX(Double xMove, Boolean snapToTile)
+    {
         Double newPositionX = position.x + xMove
         if (xMove > 0) {
             Integer tx = (newPositionX + collisionBox.origin.x + collisionBox.size.x) / Tile.TILE_WIDTH
@@ -60,12 +77,22 @@ abstract trait Collidable implements Positionable, Sizable {
      * @return
      */
     void collisionMoveY(Double yMove, Boolean snapToTile = false) {
-        if (!enableSolidTilesCollision)
-        {
-            position.y += yMove
+        if (enableEntityCollision && checkEntityCollision(0, yMove))
             return
-        }
 
+        if (!enableSolidTilesCollision)
+            position.y += yMove
+        else
+            computeTilesCollisionMoveY(yMove, snapToTile)
+    }
+
+    /**
+     * Check and compute the collision with tiles along the Y-axis
+     *
+     * @param yMove
+     * @param snapToTile
+     */
+    void computeTilesCollisionMoveY(Double yMove, Boolean snapToTile) {
         Double newPositionY = position.y + yMove
         if (yMove > 0) {
             Integer ty = ((newPositionY + collisionBox.origin.y + collisionBox.size.y) as Integer) / Tile.TILE_HEIGHT
@@ -99,4 +126,34 @@ abstract trait Collidable implements Positionable, Sizable {
         return tile ? tile.isSolid : false
     }
 
+    /**
+     * Check if this entity will collide with every other Collidable entity registered into the EntityManager
+     *
+     * @param xOffset
+     * @param yOffset
+     * @return
+     */
+    Boolean checkEntityCollision(Double xOffset, Double yOffset) {
+        def offset = new Position2D(position.x + xOffset, position.y + yOffset)
+
+        for (def entity : handler.entityManager.entities) {
+            if (entity == this) continue
+
+            if (entity instanceof Collidable && entity.enableEntityCollision) {
+                if (entity.realCollisionBox.intersect(collisionBox.createNewWithOffset(offset))) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    /**
+     * Create and return a collisionBox based on the entity position
+     *
+     * @return
+     */
+    Rectangle2D getRealCollisionBox() {
+        return collisionBox.createNewWithOffset(position)
+    }
 }

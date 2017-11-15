@@ -28,6 +28,7 @@ class Player extends Entity implements Collidable, Movable, Visible, Updatable {
         this.collisionBox = new Rectangle2D(16, 32, 32, 32)
 
         this.enableSolidTilesCollision = true
+        this.enableEntityCollision = true
 
         // Initialize Animations
         downAnimation = new Animation(500, Assets.player_down)
