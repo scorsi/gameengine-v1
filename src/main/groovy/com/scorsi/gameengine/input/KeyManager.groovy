@@ -5,22 +5,10 @@ import java.awt.event.KeyListener
 
 class KeyManager implements KeyListener {
 
-    ArrayList<Boolean> keys
-
-    /**
-     * Should be removed in the future
-     */
-    Boolean up, down, left, right
+    private ArrayList<Boolean> keys
 
     KeyManager() {
         keys = new ArrayList<>()
-    }
-
-    void update() {
-        up = keys[KeyEvent.VK_Z]
-        down = keys[KeyEvent.VK_S]
-        left = keys[KeyEvent.VK_Q]
-        right = keys[KeyEvent.VK_D]
     }
 
     @Override
@@ -37,4 +25,23 @@ class KeyManager implements KeyListener {
         keys[e.keyCode] = false
     }
 
+    ArrayList<Boolean> getKeys() {
+        return keys
+    }
+
+    Boolean getUp() {
+        return keys[KeyEvent.VK_Z]
+    }
+
+    Boolean getDown() {
+        return keys[KeyEvent.VK_S]
+    }
+
+    Boolean getLeft() {
+        return keys[KeyEvent.VK_Q]
+    }
+
+    Boolean getRight() {
+        return keys[KeyEvent.VK_D]
+    }
 }

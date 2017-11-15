@@ -95,8 +95,6 @@ abstract class Game implements Runnable {
      * Executed before update method
      */
     private void beforeUpdate() throws Exception {
-        keyManager.update()
-
         // Call update of the actual state
         if (StateManager.currentState != null)
             StateManager.currentState.update()
