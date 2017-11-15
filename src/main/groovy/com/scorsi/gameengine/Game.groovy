@@ -76,11 +76,13 @@ abstract class Game implements Runnable {
      * Initialize the Game
      */
     private void beforeInit() {
+        handler = new Handler(this)
+
         keyManager = new KeyManager()
-        mouseManager = new MouseManager()
+        mouseManager = new MouseManager(handler)
         display.frame.addKeyListener(keyManager)
         display.registerMouseManager(mouseManager)
-        handler = new Handler(this)
+
         camera = new Camera(handler)
     }
 
@@ -96,8 +98,10 @@ abstract class Game implements Runnable {
      */
     private void beforeUpdate() throws Exception {
         // Call update of the actual state
-        if (StateManager.currentState != null)
+        if (StateManager.currentState != null) {
             StateManager.currentState.update()
+            StateManager.currentState.lateUpdate()
+        }
     }
 
     /**
@@ -126,8 +130,10 @@ abstract class Game implements Runnable {
         g.clearRect(0, 0, display.width, display.height)
 
         // Call render of the actual state
-        if (StateManager.currentState != null)
+        if (StateManager.currentState != null) {
             StateManager.currentState.render(g)
+            StateManager.currentState.lateRender(g)
+        }
     }
 
     /**

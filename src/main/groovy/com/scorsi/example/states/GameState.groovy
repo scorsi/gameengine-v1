@@ -33,13 +33,11 @@ class GameState extends State {
     @Override
     void update() {
         world.update()
-        entityManager.update()
     }
 
     @Override
     void render(Graphics g) {
         world.render(g)
-        entityManager.render(g)
     }
 
 }
