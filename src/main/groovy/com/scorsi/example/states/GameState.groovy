@@ -4,7 +4,6 @@ import com.scorsi.example.entities.Player
 import com.scorsi.example.graphics.tiles.DirtTile
 import com.scorsi.example.graphics.tiles.GrassTile
 import com.scorsi.example.graphics.tiles.StoneTile
-import com.scorsi.gameengine.Game
 import com.scorsi.gameengine.Handler
 import com.scorsi.gameengine.graphics.Tile
 import com.scorsi.gameengine.graphics.World
@@ -24,8 +23,6 @@ class GameState extends State {
 
     GameState(Handler handler) {
         super(handler)
-
-        handler.game.camera.move(new Position2D(100, 100))
     }
 
     @Override
