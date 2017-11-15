@@ -16,13 +16,12 @@ class GameState extends State {
 
     GameState(Handler handler) {
         super(handler)
+        world = new World(handler, "/worlds/world2.txt")
+        handler.world = world
     }
 
     @Override
     void init() {
-        world = new World(handler, "/worlds/world2.txt")
-        handler.world = world
-
         entityManager.registerEntity(new Tree(handler, new Position2D(100, 250)))
         entityManager.registerEntity(new Tree(handler, new Position2D(100, 350)))
         entityManager.registerEntity(new Tree(handler, new Position2D(100, 450)))
