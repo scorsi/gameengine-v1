@@ -10,8 +10,6 @@ import com.scorsi.gameengine.entities.Visible
 import com.scorsi.gameengine.utils.Position2D
 import com.scorsi.gameengine.utils.Rectangle2D
 
-import java.awt.Graphics
-
 class Player extends Entity implements Collidable, Movable, Visible, Updatable {
 
     Player(Handler handler, Position2D position) {
@@ -19,6 +17,9 @@ class Player extends Entity implements Collidable, Movable, Visible, Updatable {
         this.position = position
 
         this.collisionBox = new Rectangle2D(16, 32, 32, 32)
+
+        this.image = Assets.player
+        this.centerToCamera = true
     }
 
     @Override
@@ -42,20 +43,12 @@ class Player extends Entity implements Collidable, Movable, Visible, Updatable {
             xMove = speed
     }
 
-    @Override
-    void render(Graphics g) {
-        g.drawImage(Assets.player,
-                (position.x - handler.game.camera.offset.x) as Integer,
-                (position.y - handler.game.camera.offset.y) as Integer,
-                width, height, null)
-    }
-
     /**
      * Call collision moveX instead of basic move method
      */
     @Override
     void moveX() {
-        collisionMoveX(handler.world, xMove, true)
+        collisionMoveX(xMove, true)
     }
 
     /**
@@ -63,6 +56,6 @@ class Player extends Entity implements Collidable, Movable, Visible, Updatable {
      */
     @Override
     void moveY() {
-        collisionMoveY(handler.world, yMove, true)
+        collisionMoveY(yMove, true)
     }
 }
