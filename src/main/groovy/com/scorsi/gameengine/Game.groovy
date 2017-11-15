@@ -40,6 +40,11 @@ abstract class Game implements Runnable {
     private Camera camera
 
     /**
+     * Handler
+     */
+    private Handler handler
+
+    /**
      * Threads
      */
     private Thread thread
@@ -71,7 +76,8 @@ abstract class Game implements Runnable {
     private void beforeInit() {
         keyManager = new KeyManager()
         display.frame.addKeyListener(keyManager)
-        camera = new Camera(this)
+        handler = new Handler(this)
+        camera = new Camera(handler)
     }
 
     /**
@@ -253,5 +259,14 @@ abstract class Game implements Runnable {
      */
     Camera getCamera() {
         return camera
+    }
+
+    /**
+     * Getter for handler
+     *
+     * @return
+     */
+    Handler getHandler() {
+        return handler
     }
 }

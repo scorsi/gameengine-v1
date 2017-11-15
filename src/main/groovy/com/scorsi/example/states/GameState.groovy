@@ -5,6 +5,7 @@ import com.scorsi.example.graphics.tiles.DirtTile
 import com.scorsi.example.graphics.tiles.GrassTile
 import com.scorsi.example.graphics.tiles.StoneTile
 import com.scorsi.gameengine.Game
+import com.scorsi.gameengine.Handler
 import com.scorsi.gameengine.graphics.Tile
 import com.scorsi.gameengine.graphics.World
 import com.scorsi.gameengine.states.State
@@ -21,19 +22,20 @@ class GameState extends State {
     Tile grassTile
     Tile stoneTile
 
-    GameState(Game game) {
-        super(game)
+    GameState(Handler handler) {
+        super(handler)
 
-        game.camera.move(new Position2D(100, 100))
+        handler.game.camera.move(new Position2D(100, 100))
     }
 
     @Override
     void init() {
-        player = new Player(game, new Position2D(100, 100))
+        player = new Player(handler, new Position2D(100, 100))
         grassTile = new GrassTile(0)
         dirtTile = new DirtTile(1)
         stoneTile = new StoneTile(2)
-        world = new World(game, "/worlds/world2.txt")
+        world = new World(handler, "/worlds/world2.txt")
+        handler.world = world
     }
 
     @Override

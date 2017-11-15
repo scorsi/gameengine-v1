@@ -15,7 +15,7 @@ class MyGame extends Game {
     @Override
     protected void init() throws Exception {
         Assets.init()
-        gameState = new GameState(this)
+        gameState = new GameState(handler)
         StateManager.setState(gameState)
         gameState.init()
     }

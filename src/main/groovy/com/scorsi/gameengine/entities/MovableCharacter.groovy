@@ -1,6 +1,7 @@
 package com.scorsi.gameengine.entities
 
 import com.scorsi.gameengine.Game
+import com.scorsi.gameengine.Handler
 import com.scorsi.gameengine.utils.Position2D
 
 abstract class MovableCharacter extends Character {
@@ -11,12 +12,8 @@ abstract class MovableCharacter extends Character {
 
     Double xMove, yMove
 
-    MovableCharacter(Game game, Position2D pos) {
-        super(game, pos)
-    }
-
-    MovableCharacter(Game game, Position2D pos, Integer width, Integer height) {
-        super(game, pos, width, height)
+    MovableCharacter(Handler handler, Position2D pos) {
+        super(handler, pos)
     }
 
     void resetMove() {

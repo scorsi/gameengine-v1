@@ -1,6 +1,7 @@
 package com.scorsi.gameengine.graphics
 
 import com.scorsi.gameengine.Game
+import com.scorsi.gameengine.Handler
 import com.scorsi.gameengine.utils.FileLoader
 import com.scorsi.gameengine.utils.Parser
 import com.scorsi.gameengine.utils.Position2D
@@ -9,7 +10,7 @@ import java.awt.Graphics
 
 class World {
 
-    protected Game game
+    protected Handler handler
 
     protected Integer width
     protected Integer height
@@ -19,8 +20,8 @@ class World {
 
     protected Integer[][] tiles
 
-    World(Game game, String path) {
-        this.game = game
+    World(Handler handler, String path) {
+        this.handler = handler
         loadWorld(path)
     }
 
@@ -28,17 +29,17 @@ class World {
     }
 
     void render(Graphics g) {
-        Integer xStart = Math.max(0, game.camera.offset.x / Tile.TILE_WIDTH) as Integer
-        Integer xEnd = Math.min(width, (game.camera.offset.x + game.display.width) / Tile.TILE_WIDTH + 1) as Integer
+        Integer xStart = Math.max(0, handler.game.camera.offset.x / Tile.TILE_WIDTH) as Integer
+        Integer xEnd = Math.min(width, (handler.game.camera.offset.x + handler.game.display.width) / Tile.TILE_WIDTH + 1) as Integer
 
-        Integer yStart = Math.max(0, game.camera.offset.y / Tile.TILE_HEIGHT) as Integer
-        Integer yEnd = Math.min(height, (game.camera.offset.y + game.display.height) / Tile.TILE_HEIGHT + 1) as Integer
+        Integer yStart = Math.max(0, handler.game.camera.offset.y / Tile.TILE_HEIGHT) as Integer
+        Integer yEnd = Math.min(height, (handler.game.camera.offset.y + handler.game.display.height) / Tile.TILE_HEIGHT + 1) as Integer
 
         for (Integer y in yStart .. yEnd - 1) {
             for (Integer x in xStart .. xEnd - 1) {
                 def realPos = new Position2D(
-                        x * Tile.TILE_WIDTH - game.camera.offset.x,
-                        y * Tile.TILE_HEIGHT - game.camera.offset.y)
+                        x * Tile.TILE_WIDTH - handler.game.camera.offset.x,
+                        y * Tile.TILE_HEIGHT - handler.game.camera.offset.y)
 
                 Tile tile = getTile(x, y)
                 if (tile == null) continue

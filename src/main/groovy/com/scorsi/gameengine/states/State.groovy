@@ -1,15 +1,15 @@
 package com.scorsi.gameengine.states
 
-import com.scorsi.gameengine.Game
+import com.scorsi.gameengine.Handler
 
 import java.awt.Graphics
 
 abstract class State {
 
-    protected Game game
+    protected Handler handler
 
-    State(Game game) {
-        this.game = game
+    State(Handler handler) {
+        this.handler = handler
     }
 
     abstract void init()
