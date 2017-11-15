@@ -94,8 +94,8 @@ abstract class Game implements Runnable {
         keyManager.update()
 
         // Call update of the actual state
-        if (StateManager.getState() != null)
-            StateManager.getState().update()
+        if (StateManager.currentState != null)
+            StateManager.currentState.update()
     }
 
     /**
@@ -124,8 +124,8 @@ abstract class Game implements Runnable {
         g.clearRect(0, 0, display.width, display.height)
 
         // Call render of the actual state
-        if (StateManager.getState() != null)
-            StateManager.getState().render(g)
+        if (StateManager.currentState != null)
+            StateManager.currentState.render(g)
     }
 
     /**

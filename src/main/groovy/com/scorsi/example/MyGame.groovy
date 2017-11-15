@@ -16,7 +16,7 @@ class MyGame extends Game {
     protected void init() throws Exception {
         Assets.init()
         gameState = new GameState(handler)
-        StateManager.setState(gameState)
+        StateManager.currentState = gameState
         gameState.init()
     }
 
