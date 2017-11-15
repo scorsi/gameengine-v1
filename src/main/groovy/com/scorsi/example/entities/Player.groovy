@@ -6,13 +6,13 @@ import com.scorsi.gameengine.entities.Collidable
 import com.scorsi.gameengine.entities.Entity
 import com.scorsi.gameengine.entities.LookAt
 import com.scorsi.gameengine.entities.Movable
+import com.scorsi.gameengine.entities.Texturable
 import com.scorsi.gameengine.entities.Updatable
-import com.scorsi.gameengine.entities.Visible
 import com.scorsi.gameengine.graphics.Animation
 import com.scorsi.gameengine.utils.Position2D
 import com.scorsi.gameengine.utils.Rectangle2D
 
-class Player extends Entity implements Collidable, Movable, Visible, Updatable {
+class Player extends Entity implements Collidable, Movable, Texturable, Updatable {
 
     private LookAt lookAt
 

@@ -4,12 +4,12 @@ import com.scorsi.example.Assets
 import com.scorsi.gameengine.Handler
 import com.scorsi.gameengine.entities.Collidable
 import com.scorsi.gameengine.entities.Entity
-import com.scorsi.gameengine.entities.Visible
+import com.scorsi.gameengine.entities.Texturable
 import com.scorsi.gameengine.graphics.Tile
 import com.scorsi.gameengine.utils.Position2D
 import com.scorsi.gameengine.utils.Rectangle2D
 
-class Tree extends Entity implements Visible, Collidable {
+class Tree extends Entity implements Texturable, Collidable {
 
     Tree(Handler handler, Position2D position) {
         super(handler)
