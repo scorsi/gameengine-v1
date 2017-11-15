@@ -1,5 +1,7 @@
 package com.scorsi.gameengine.graphics
 
+import com.scorsi.gameengine.utils.ImageLoader
+
 import java.awt.image.BufferedImage
 
 class SpriteSheet {
