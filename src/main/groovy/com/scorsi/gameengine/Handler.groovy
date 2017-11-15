@@ -36,10 +36,12 @@ class Handler {
     }
 
     EntityManager getEntityManager() {
+        if (StateManager.currentState == null) return null
         return StateManager.currentState.entityManager
     }
 
     UIManager getUiManager() {
+        if (StateManager.currentState == null) return null
         return StateManager.currentState.uiManager
     }
 }
