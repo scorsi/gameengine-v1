@@ -2,15 +2,23 @@ package com.scorsi.example.entities
 
 import com.scorsi.example.Assets
 import com.scorsi.gameengine.Handler
-import com.scorsi.gameengine.entities.MovableCharacter
+import com.scorsi.gameengine.entities.Collidable
+import com.scorsi.gameengine.entities.Entity
+import com.scorsi.gameengine.entities.Movable
+import com.scorsi.gameengine.entities.Updatable
+import com.scorsi.gameengine.entities.Visible
 import com.scorsi.gameengine.utils.Position2D
+import com.scorsi.gameengine.utils.Rectangle2D
 
 import java.awt.Graphics
 
-class Player extends MovableCharacter {
+class Player extends Entity implements Collidable, Movable, Visible, Updatable {
 
-    Player(Handler handler, Position2D pos) {
-        super(handler, pos)
+    Player(Handler handler, Position2D position) {
+        super(handler)
+        this.position = position
+
+        this.collisionBox = new Rectangle2D(16, 32, 32, 32)
     }
 
     @Override
@@ -42,4 +50,19 @@ class Player extends MovableCharacter {
                 width, height, null)
     }
 
+    /**
+     * Call collision moveX instead of basic move method
+     */
+    @Override
+    void moveX() {
+        collisionMoveX(handler.world, xMove, true)
+    }
+
+    /**
+     * Call collision moveY instead of basic move method
+     */
+    @Override
+    void moveY() {
+        collisionMoveY(handler.world, yMove, true)
+    }
 }
