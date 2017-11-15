@@ -36,4 +36,8 @@ class EntityManager {
     {
         entities.add(entity)
     }
+
+    ArrayList<Entity> getEntities() {
+        return entities
+    }
 }
