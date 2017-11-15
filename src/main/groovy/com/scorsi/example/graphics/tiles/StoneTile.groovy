@@ -7,6 +7,7 @@ class StoneTile extends Tile {
 
     StoneTile(Integer id) {
         super(Assets.stone, id)
+        isSolid = true
     }
 
 }
