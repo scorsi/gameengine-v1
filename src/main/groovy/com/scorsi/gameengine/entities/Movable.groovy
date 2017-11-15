@@ -1,5 +1,8 @@
 package com.scorsi.gameengine.entities
 
+import groovy.transform.SelfType
+
+@SelfType(Entity)
 abstract trait Movable implements Positionable {
 
     static final DEFAULT_SPEED = 3D
