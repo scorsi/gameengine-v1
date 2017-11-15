@@ -3,6 +3,7 @@ package com.scorsi.gameengine
 import com.scorsi.gameengine.display.Camera
 import com.scorsi.gameengine.display.Display
 import com.scorsi.gameengine.input.KeyManager
+import com.scorsi.gameengine.input.MouseManager
 import com.scorsi.gameengine.states.StateManager
 
 import java.awt.Graphics
@@ -33,6 +34,7 @@ abstract class Game implements Runnable {
      * Inputs
      */
     private KeyManager keyManager
+    private MouseManager mouseManager
 
     /**
      * Camera
@@ -75,7 +77,9 @@ abstract class Game implements Runnable {
      */
     private void beforeInit() {
         keyManager = new KeyManager()
+        mouseManager = new MouseManager()
         display.frame.addKeyListener(keyManager)
+        display.registerMouseManager(mouseManager)
         handler = new Handler(this)
         camera = new Camera(handler)
     }
@@ -250,6 +254,15 @@ abstract class Game implements Runnable {
      */
     KeyManager getKeyManager() {
         return keyManager
+    }
+
+    /**
+     * Getter for mouseManager
+     *
+     * @return
+     */
+    MouseManager getMouseManager() {
+        return mouseManager
     }
 
     /**

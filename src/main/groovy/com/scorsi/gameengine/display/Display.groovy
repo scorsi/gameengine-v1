@@ -1,5 +1,7 @@
 package com.scorsi.gameengine.display
 
+import com.scorsi.gameengine.input.MouseManager
+
 import javax.swing.JFrame
 import java.awt.Canvas
 import java.awt.Dimension
@@ -63,6 +65,18 @@ class Display {
 
         frame.add(canvas)
         frame.pack()
+    }
+
+    /**
+     * Register the MouseManager
+     *
+     * @param mouseManager
+     */
+    void registerMouseManager(MouseManager mouseManager) {
+        frame.addMouseListener(mouseManager)
+        frame.addMouseMotionListener(mouseManager)
+        canvas.addMouseListener(mouseManager)
+        canvas.addMouseMotionListener(mouseManager)
     }
 
     /**
