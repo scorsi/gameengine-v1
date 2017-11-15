@@ -48,7 +48,7 @@ class World {
         }
     }
 
-    private Tile getTile(Integer x, Integer y) {
+    Tile getTile(Integer x, Integer y) {
         if (x > width || x < 0 || y > height || y < 0) return null
         return Tile.tiles[tiles[x][y]]
     }
