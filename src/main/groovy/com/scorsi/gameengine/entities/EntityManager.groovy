@@ -7,28 +7,26 @@ import java.awt.Graphics
 class EntityManager {
 
     private Handler handler
-    private ArrayList<Entity> entities
-    private Comparator<Entity> renderSorter = new Comparator<Entity>() {
-        @Override
-        int compare(Entity o1, Entity o2) {
-            Boolean o1Visible = o1 instanceof Visible
-            Boolean o2Visible = o2 instanceof Visible
-            if (!o1Visible && !o2Visible)
-                return 0
-            else if (!o1Visible)
-                return 1
-            else if (!o2Visible)
-                return -1
 
-            if (o1.position.y + o1.size.y < o2.position.y + o2.size.y)
-                return -1
-            return 1
-        }
-    }
+    /**
+     * List of registered entities
+     */
+    private ArrayList<Entity> entities
+
+    /**
+     * List of entities waiting of deletion
+     */
+    private ArrayList<Entity> entitiesToRemove
+
+    /**
+     * The Entity Sorter
+     */
+    private Comparator<Entity> renderSorter = new EntityRenderSorter()
 
     EntityManager(Handler handler) {
         this.handler = handler
         this.entities = new ArrayList<>()
+        this.entitiesToRemove = new ArrayList<>()
     }
 
     void update() {
@@ -37,6 +35,11 @@ class EntityManager {
             if (entity instanceof Updatable)
                 entity.update()
         }
+
+        // Execute all waiting entity deletion
+        purgeEntitiesToRemove()
+
+        // Sort entities by Y-axis
         entities.sort(renderSorter)
     }
 
@@ -50,6 +53,17 @@ class EntityManager {
 
     void registerEntity(Entity entity) {
         entities.add(entity)
+    }
+
+    void deleteEntity(Entity entity) {
+        entitiesToRemove.add(entity)
+    }
+
+    private void purgeEntitiesToRemove() {
+        for (def entity : entitiesToRemove) {
+            entities.remove(entity)
+        }
+        entitiesToRemove.clear()
     }
 
     ArrayList<Entity> getEntities() {
