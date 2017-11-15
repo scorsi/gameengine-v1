@@ -15,7 +15,7 @@ abstract trait Collidable implements Positionable, Sizable {
     /**
      * Enable solid tiles check
      */
-    Boolean enableSolidTilesCollision = true
+    Boolean enableSolidTilesCollision = false
 
     /**
      * Check if we can move to the given distance along X-axis
@@ -25,6 +25,12 @@ abstract trait Collidable implements Positionable, Sizable {
      * @return
      */
     void collisionMoveX(Double xMove, Boolean snapToTile = false) {
+        if (!enableSolidTilesCollision)
+        {
+            position.x += xMove
+            return
+        }
+
         Double newPositionX = position.x + xMove
         if (xMove > 0) {
             Integer tx = (newPositionX + collisionBox.origin.x + collisionBox.size.x) / Tile.TILE_WIDTH
@@ -54,6 +60,12 @@ abstract trait Collidable implements Positionable, Sizable {
      * @return
      */
     void collisionMoveY(Double yMove, Boolean snapToTile = false) {
+        if (!enableSolidTilesCollision)
+        {
+            position.y += yMove
+            return
+        }
+
         Double newPositionY = position.y + yMove
         if (yMove > 0) {
             Integer ty = ((newPositionY + collisionBox.origin.y + collisionBox.size.y) as Integer) / Tile.TILE_HEIGHT
@@ -83,7 +95,6 @@ abstract trait Collidable implements Positionable, Sizable {
      * @return
      */
     Boolean collisionWithTile(Integer x, Integer y) {
-        if (!enableSolidTilesCollision) return false
         Tile tile = handler.world.getTile(x, y)
         return tile ? tile.isSolid : false
     }
