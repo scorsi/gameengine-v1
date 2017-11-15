@@ -5,7 +5,7 @@ import com.scorsi.gameengine.utils.Rectangle2D
 import groovy.transform.SelfType
 
 @SelfType(Entity)
-abstract trait Collidable implements Positionable, Sizable, Updatable {
+abstract trait Collidable implements Positionable, Sizable {
 
     /**
      * The box collision
