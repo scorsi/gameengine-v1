@@ -28,6 +28,8 @@ class Assets {
     static BufferedImage[] zombie_left = new BufferedImage[2]
     static BufferedImage[] zombie_right = new BufferedImage[2]
 
+    static BufferedImage[] btn_start = new BufferedImage[2]
+
     static Tile dirtTile
     static Tile grassTile
     static Tile stoneTile
@@ -50,15 +52,17 @@ class Assets {
         player_left[0] = sheet.crop(width * 6, height, width, height)
         player_left[1] = sheet.crop(width * 7, height, width, height)
 
-        zombie_down[0] = sheet.crop(width * 4, height * 2, width, height);
-        zombie_down[1] = sheet.crop(width * 5, height * 2, width, height);
-        zombie_up[0] = sheet.crop(width * 6, height * 2, width, height);
-        zombie_up[1] = sheet.crop(width * 7, height * 2, width, height);
-        zombie_right[0] = sheet.crop(width * 4, height * 3, width, height);
-        zombie_right[1] = sheet.crop(width * 5, height * 3, width, height);
-        zombie_left[0] = sheet.crop(width * 6, height * 3, width, height);
-        zombie_left[1] = sheet.crop(width * 7, height * 3, width, height);
+        zombie_down[0] = sheet.crop(width * 4, height * 2, width, height)
+        zombie_down[1] = sheet.crop(width * 5, height * 2, width, height)
+        zombie_up[0] = sheet.crop(width * 6, height * 2, width, height)
+        zombie_up[1] = sheet.crop(width * 7, height * 2, width, height)
+        zombie_right[0] = sheet.crop(width * 4, height * 3, width, height)
+        zombie_right[1] = sheet.crop(width * 5, height * 3, width, height)
+        zombie_left[0] = sheet.crop(width * 6, height * 3, width, height)
+        zombie_left[1] = sheet.crop(width * 7, height * 3, width, height)
 
+        btn_start[0] = sheet.crop(width * 6, height * 4, width * 2, height)
+        btn_start[1] = sheet.crop(width * 6, height * 5, width * 2, height)
 
         grassTile = new GrassTile(0)
         dirtTile = new DirtTile(1)
