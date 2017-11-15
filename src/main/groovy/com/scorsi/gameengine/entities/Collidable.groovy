@@ -5,12 +5,12 @@ import com.scorsi.gameengine.utils.Rectangle2D
 import groovy.transform.SelfType
 
 @SelfType(Entity)
-abstract trait Collidable implements Positionable, Updatable {
+abstract trait Collidable implements Positionable, Sizable, Updatable {
 
     /**
      * The box collision
      */
-    Rectangle2D collisionBox = new Rectangle2D()
+    Rectangle2D collisionBox = new Rectangle2D(0, 0, width, height)
 
     /**
      * Enable solid tiles check

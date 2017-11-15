@@ -6,15 +6,9 @@ import java.awt.Graphics
 import java.awt.image.BufferedImage
 
 @SelfType(Entity)
-trait Visible implements Positionable {
-
-    static final DEFAULT_WIDTH = 64
-    static final DEFAULT_HEIGHT = 64
+trait Visible implements Positionable, Sizable {
 
     BufferedImage image
-
-    Integer width = DEFAULT_WIDTH
-    Integer height = DEFAULT_HEIGHT
 
     Boolean centerToCamera = false
 
