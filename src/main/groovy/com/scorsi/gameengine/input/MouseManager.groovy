@@ -1,5 +1,6 @@
 package com.scorsi.gameengine.input
 
+import com.scorsi.gameengine.Handler
 import com.scorsi.gameengine.utils.Position2D
 
 import java.awt.event.MouseEvent
@@ -10,6 +11,11 @@ class MouseManager implements MouseListener, MouseMotionListener {
 
     private Dictionary<Integer, Boolean> buttons
     private Position2D mousePosition = new Position2D()
+    private Handler handler
+
+    MouseManager(Handler handler) {
+        this.handler = handler
+    }
 
     @Override
     void mouseClicked(MouseEvent e) {
@@ -23,6 +29,22 @@ class MouseManager implements MouseListener, MouseMotionListener {
     @Override
     void mouseReleased(MouseEvent e) {
         buttons[e.getButton()] = false
+
+        if (handler.uiManager != null) {
+            def mouse = new Mouse(e, mousePosition)
+            handler.uiManager.onMouseRelease(mouse)
+        }
+    }
+
+    @Override
+    void mouseMoved(MouseEvent e) {
+        mousePosition.x = e.x
+        mousePosition.y = e.y
+
+        if (handler.uiManager != null) {
+            def mouse = new Mouse(e, mousePosition)
+            handler.uiManager.onMouseMove(mouse)
+        }
     }
 
     @Override
@@ -35,12 +57,6 @@ class MouseManager implements MouseListener, MouseMotionListener {
 
     @Override
     void mouseDragged(MouseEvent e) {
-    }
-
-    @Override
-    void mouseMoved(MouseEvent e) {
-        mousePosition.x = e.x
-        mousePosition.y = e.y
     }
 
     Dictionary<Integer, Boolean> getButtons() {

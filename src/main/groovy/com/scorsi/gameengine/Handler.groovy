@@ -6,7 +6,9 @@ import com.scorsi.gameengine.entities.Entity
 import com.scorsi.gameengine.entities.EntityManager
 import com.scorsi.gameengine.graphics.World
 import com.scorsi.gameengine.input.KeyManager
+import com.scorsi.gameengine.states.State
 import com.scorsi.gameengine.states.StateManager
+import com.scorsi.gameengine.ui.UIManager
 
 class Handler {
 
@@ -35,5 +37,9 @@ class Handler {
 
     EntityManager getEntityManager() {
         return StateManager.currentState.entityManager
+    }
+
+    UIManager getUiManager() {
+        return StateManager.currentState.uiManager
     }
 }
