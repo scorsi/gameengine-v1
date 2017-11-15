@@ -1,6 +1,5 @@
 package com.scorsi.gameengine.entities
 
-import com.scorsi.gameengine.Game
 import com.scorsi.gameengine.Handler
 import com.scorsi.gameengine.utils.Position2D
 
