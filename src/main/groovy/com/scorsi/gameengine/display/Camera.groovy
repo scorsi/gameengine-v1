@@ -2,6 +2,9 @@ package com.scorsi.gameengine.display
 
 import com.scorsi.gameengine.Handler
 import com.scorsi.gameengine.entities.Entity
+import com.scorsi.gameengine.entities.Positionable
+import com.scorsi.gameengine.entities.Sizable
+import com.scorsi.gameengine.graphics.Tile
 import com.scorsi.gameengine.utils.Position2D
 
 class Camera {
@@ -27,16 +30,37 @@ class Camera {
     void move(Double xAmt, Double yAmt) {
         this.offset.x += xAmt
         this.offset.y += yAmt
+
+        checkBlankSpace()
     }
 
     void move(Position2D amt) {
         this.offset.x += amt.x
         this.offset.y += amt.y
+
+        checkBlankSpace()
     }
 
+    /**
+     * Check for blank screen around the world
+     */
+    void checkBlankSpace() {
+        if (offset.x < 0)
+            offset.x = 0
+        else if (offset.x > handler.world.width * Tile.TILE_WIDTH - handler.display.width)
+            offset.x = handler.world.width * Tile.TILE_WIDTH - handler.display.width
+
+        if (offset.y < 0)
+            offset.y = 0
+        else if (offset.y > handler.world.height* Tile.TILE_HEIGHT - handler.display.height)
+            offset.y = handler.world.height * Tile.TILE_HEIGHT- handler.display.height
+    }
+    
     void centerOnEntity(Entity entity) {
         offset.x = entity.position.x - handler.game.display.width / 2 + entity.width / 2
         offset.y = entity.position.y - handler.game.display.height / 2 + entity.height / 2
+
+        checkBlankSpace()
     }
 
 }
