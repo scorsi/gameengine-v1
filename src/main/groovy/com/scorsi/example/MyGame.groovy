@@ -1,12 +1,12 @@
 package com.scorsi.example
 
-import com.scorsi.example.states.GameState
+import com.scorsi.example.states.MenuState
 import com.scorsi.gameengine.Game
 import com.scorsi.gameengine.states.StateManager
 
 class MyGame extends Game {
 
-    private GameState gameState
+    private MenuState menuState
 
     MyGame() {
         super()
@@ -15,9 +15,11 @@ class MyGame extends Game {
     @Override
     protected void init() throws Exception {
         Assets.init()
-        gameState = new GameState(handler)
-        StateManager.currentState = gameState
-        gameState.init()
+
+        menuState = new MenuState(handler)
+
+        StateManager.currentState = menuState
+        menuState.init()
     }
 
     @Override
