@@ -33,8 +33,7 @@ class EntityManager {
 
     void update()
     {
-        for (Integer i in 0 .. entities.size() - 1) {
-            Entity entity = entities.get(i)
+        for (def entity : entities) {
             if (entity instanceof Updatable)
                 entity.update()
         }
