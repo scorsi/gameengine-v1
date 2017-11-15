@@ -55,10 +55,24 @@ class Camera {
         else if (offset.y > handler.world.height* Tile.TILE_HEIGHT - handler.display.height)
             offset.y = handler.world.height * Tile.TILE_HEIGHT- handler.display.height
     }
-    
-    void centerOnEntity(Entity entity) {
-        offset.x = entity.position.x - handler.game.display.width / 2 + entity.width / 2
-        offset.y = entity.position.y - handler.game.display.height / 2 + entity.height / 2
+
+    /**
+     * Center the camera on the given positionable entity
+     * Check if it is Sizable to center the camera to the entity center
+     *
+     * @param entity
+     */
+    void centerOnEntity(Positionable entity) {
+        if (entity instanceof Sizable)
+        {
+            offset.x = entity.position.x - handler.game.display.width / 2 + entity.width / 2
+            offset.y = entity.position.y - handler.game.display.height / 2 + entity.height / 2
+        }
+        else
+        {
+            offset.x = entity.position.x - handler.game.display.width / 2
+            offset.y = entity.position.y - handler.game.display.height / 2
+        }
 
         checkBlankSpace()
     }
