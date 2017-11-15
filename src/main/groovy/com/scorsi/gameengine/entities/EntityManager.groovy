@@ -31,25 +31,24 @@ class EntityManager {
         this.entities = new ArrayList<>()
     }
 
-    void update()
-    {
+    void update() {
         for (def entity : entities) {
+            if (!entity.isEnabled) continue
             if (entity instanceof Updatable)
                 entity.update()
         }
         entities.sort(renderSorter)
     }
 
-    void render(Graphics g)
-    {
+    void render(Graphics g) {
         for (def entity : entities) {
+            if (!entity.isEnabled) continue
             if (entity instanceof Visible)
                 entity.render(g)
         }
     }
 
-    void registerEntity(Entity entity)
-    {
+    void registerEntity(Entity entity) {
         entities.add(entity)
     }
 
