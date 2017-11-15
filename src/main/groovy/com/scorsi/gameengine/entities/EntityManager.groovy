@@ -8,6 +8,23 @@ class EntityManager {
 
     private Handler handler
     private ArrayList<Entity> entities
+    private Comparator<Entity> renderSorter = new Comparator<Entity>() {
+        @Override
+        int compare(Entity o1, Entity o2) {
+            Boolean o1Visible = o1 instanceof Visible
+            Boolean o2Visible = o2 instanceof Visible
+            if (!o1Visible && !o2Visible)
+                return 0
+            else if (!o1Visible)
+                return 1
+            else if (!o2Visible)
+                return -1
+
+            if (o1.position.y + o1.size.y < o2.position.y + o2.size.y)
+                return -1
+            return 1
+        }
+    }
 
     EntityManager(Handler handler) {
         this.handler = handler
@@ -21,12 +38,12 @@ class EntityManager {
             if (entity instanceof Updatable)
                 entity.update()
         }
+        entities.sort(renderSorter)
     }
 
     void render(Graphics g)
     {
-        for (Integer i in 0 .. entities.size() - 1) {
-            Entity entity = entities.get(i)
+        for (def entity : entities) {
             if (entity instanceof Visible)
                 entity.render(g)
         }
