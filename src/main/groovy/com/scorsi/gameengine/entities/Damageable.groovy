@@ -3,13 +3,20 @@ package com.scorsi.gameengine.entities
 import groovy.transform.SelfType
 
 @SelfType(Entity)
-trait Damageable {
+trait Damageable implements Collidable {
 
     static final Double DEFAULT_HEALTH = 100D
+    static final Double DEFAULT_DAMAGE = 10D
 
     Boolean limitHealthToMax = true
     Double maxHealth = DEFAULT_HEALTH
     Double health = DEFAULT_HEALTH
+
+    Double damage = DEFAULT_DAMAGE
+
+    void doDamage(Damageable other) {
+        other.takeDamage(damage)
+    }
 
     void takeDamage(Double damage) {
         health -= damage
