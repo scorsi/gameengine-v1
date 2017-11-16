@@ -2,17 +2,18 @@ package com.scorsi.example.entities
 
 import com.scorsi.example.Assets
 import com.scorsi.gameengine.Handler
-import com.scorsi.gameengine.entities.Collidable
+import com.scorsi.gameengine.entities.Damageable
 import com.scorsi.gameengine.entities.Entity
 import com.scorsi.gameengine.entities.LookAt
 import com.scorsi.gameengine.entities.Movable
+import com.scorsi.gameengine.entities.SimpleAttacker
 import com.scorsi.gameengine.entities.Texturable
 import com.scorsi.gameengine.entities.Updatable
 import com.scorsi.gameengine.graphics.Animation
 import com.scorsi.gameengine.utils.Position2D
 import com.scorsi.gameengine.utils.Rectangle2D
 
-class Player extends Entity implements Collidable, Movable, Texturable, Updatable {
+class Player extends Entity implements SimpleAttacker, Movable, Texturable, Updatable {
 
     private LookAt lookAt
 
@@ -52,9 +53,11 @@ class Player extends Entity implements Collidable, Movable, Texturable, Updatabl
         move()
 
         handler.camera.centerOnEntity(this)
+
+        checkAttack()
     }
 
-    private determineLookAt()
+    private void determineLookAt()
     {
         if (xMove < 0)
             lookAt = LookAt.Left
@@ -66,7 +69,13 @@ class Player extends Entity implements Collidable, Movable, Texturable, Updatabl
             lookAt = LookAt.Down
     }
 
-    void getInput() {
+    private void checkAttack() {
+        if (handler.keyManager.action1 && canAttack()) {
+            attack(lookAt)
+        }
+    }
+
+    private void getInput() {
         if (handler.keyManager.up)
             yMove = -speed
         if (handler.keyManager.down)
