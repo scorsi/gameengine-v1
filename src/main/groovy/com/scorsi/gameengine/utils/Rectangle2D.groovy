@@ -88,4 +88,19 @@ class Rectangle2D {
                 (th < ty || th > ry))
     }
 
+    Double getWidth() {
+        return size.x
+    }
+
+    void setWidth(Double width) {
+        this.size.x = width
+    }
+
+    Double getHeight() {
+        return size.y
+    }
+
+    void setHeight(Double height) {
+        this.height = height
+    }
 }
