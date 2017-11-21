@@ -31,7 +31,7 @@ jar {
         )
     }
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    //destinationDir = file("$rootDir/out")
+    destinationDir = file("$rootDir/bin")
 }
 
 task ("package", dependsOn: jar, type: Jar) {}
