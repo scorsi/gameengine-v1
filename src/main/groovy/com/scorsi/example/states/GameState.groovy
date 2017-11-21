@@ -16,7 +16,7 @@ class GameState extends State {
 
     GameState(Handler handler) {
         super(handler)
-        world = new World(handler, "/worlds/world2.txt")
+        world = new World(handler, "worlds/world2.txt")
         handler.world = world
     }
 
