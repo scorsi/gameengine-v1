@@ -4,7 +4,8 @@ import com.scorsi.example.graphics.tiles.DirtTile
 import com.scorsi.example.graphics.tiles.GrassTile
 import com.scorsi.example.graphics.tiles.StoneTile
 import com.scorsi.gameengine.graphics.Tile
-import com.scorsi.gameengine.utils.ImageLoader
+import com.scorsi.gameengine.utils.FileLoader
+
 import com.scorsi.gameengine.graphics.SpriteSheet
 
 import java.awt.image.BufferedImage
@@ -35,7 +36,7 @@ class Assets {
     static Tile stoneTile
 
     static void init() {
-        SpriteSheet sheet = new SpriteSheet(ImageLoader.load("/textures/sheet.png"))
+        SpriteSheet sheet = new SpriteSheet(FileLoader.loadImage("textures/sheet.png"))
 
         dirt = sheet.crop(width, 0, width, height)
         grass = sheet.crop(width * 2, 0, width, height)
